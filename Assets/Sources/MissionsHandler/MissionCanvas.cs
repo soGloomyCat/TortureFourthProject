@@ -44,7 +44,7 @@ public class MissionCanvas : MonoBehaviour
 
     private IEnumerator CloseFrame()
     {
-        WaitForSeconds waiter = new WaitForSeconds(0.5f);
+        WaitForSeconds waiter = new WaitForSeconds(4f);
         _objectIcon.gameObject.SetActive(false);
         _completeIcon.gameObject.SetActive(true);
         _frameAnimator.SetTrigger(AnimationTrigger);
