@@ -3,13 +3,16 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class SheepAnimationHandler : MonoBehaviour
 {
-    private const string AnimationTrigger = "IsIdle";
+    private const string IdleAnimationTrigger = "IsIdle";
+    private const string ShornAnimationTrigger = "IsShorn";
 
     private Animator _animator;
 
     private void Awake() => _animator = GetComponent<Animator>();
 
-    public void ActivateAnimation() => _animator.SetBool(AnimationTrigger, true);
+    public void ActivateIdleAnimation() => _animator.SetBool(IdleAnimationTrigger, true);
 
-    public void DeactivateAnimation() => _animator.SetBool(AnimationTrigger, false);
+    public void DeactivateIdleAnimation() => _animator.SetBool(IdleAnimationTrigger, false);
+
+    public void ActivateShornAnimation() => _animator.SetTrigger(ShornAnimationTrigger);
 }

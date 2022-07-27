@@ -17,6 +17,7 @@ public class SheepSpawnerHandler : MonoBehaviour
     private float _currentTime;
 
     public event Action<int> CostChanged;
+    public event Action<int> CurrentCostChanged;
 
     public int Cost => _cost;
     public Transform MoneyPosition => _moneyPosition;
@@ -54,13 +55,14 @@ public class SheepSpawnerHandler : MonoBehaviour
         if (++_currentSheepCount >= TriggerValue)
         {
             _cost += CostIncrease;
+            _currentCost = _cost;
             CostChanged?.Invoke(_cost);
         }
     }
 
     public void ReduceCurrentCost()
     {
-        CostChanged?.Invoke(--_currentCost);
+        CurrentCostChanged?.Invoke(--_currentCost);
     }
 
     public void ResumeCurrentCost()

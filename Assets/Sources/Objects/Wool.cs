@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Wool : MonoBehaviour
 {
-    private const float Speed = 3.5f;
+    private const float Speed = 4f;
+    private const float Offset = 0.5f;
 
     [SerializeField] private Transform _rackPoint;
     [SerializeField] private int _cost;
 
     private Coroutine _coroutine;
     private bool _isReadyToMove;
+    private bool _isMoveOver;
 
     public event Action ReadyToIssue;
 
@@ -21,10 +23,23 @@ public class Wool : MonoBehaviour
     private IEnumerator Collect(Transform startPosition, Transform rackPoint)
     {
         transform.position = startPosition.position;
+        Vector3 tempPosition = new Vector3(startPosition.position.x, startPosition.position.y + Offset, startPosition.position.z);
 
-        while (transform.position != rackPoint.position)
+        while (transform.position != tempPosition && _isMoveOver == false)
         {
-            transform.position = Vector3.MoveTowards(transform.position, rackPoint.position, Speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, tempPosition, Speed * Time.deltaTime);
+
+            if (transform.position == tempPosition)
+            {
+                while (transform.position != rackPoint.position)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, rackPoint.position, Speed * Time.deltaTime);
+                    yield return null;
+                }
+
+                _isMoveOver = true;
+            }
+
             yield return null;
         }
 
@@ -36,6 +51,7 @@ public class Wool : MonoBehaviour
     public void Cut(Transform startPosition, Transform rackPoint)
     {
         _isReadyToMove = false;
+        _isMoveOver = false;
 
         if (_coroutine != null)
             StopCoroutine(_coroutine);

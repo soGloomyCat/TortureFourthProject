@@ -18,9 +18,9 @@ public class SheepMover : MonoBehaviour
     private void Update()
     {
         if (Vector3.Distance(transform.position, _agent.destination) <= 0.1f)
-            _animator.DeactivateAnimation();
+            _animator.ActivateIdleAnimation();
         else
-            _animator.ActivateAnimation();
+            _animator.DeactivateIdleAnimation();
     }
 
     public void Inizialize(Vector3 targetPosition)

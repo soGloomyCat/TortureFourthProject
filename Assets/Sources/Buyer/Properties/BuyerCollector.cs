@@ -15,6 +15,12 @@ public class BuyerCollector : MonoBehaviour
     public int RemainWoolCount => _remainWoolCount;
     public bool IsCollected => _isCollected;
 
+    private void Update()
+    {
+        if (_remainWoolCount == 0 && CheckCollected())
+            _isCollected = true;
+    }
+
     public bool TryAccept(Wool wool)
     {
         if (wool == null)
@@ -38,9 +44,6 @@ public class BuyerCollector : MonoBehaviour
 
         _lastWool = wool;
         _canvasHandler.UpdateInfo(_remainWoolCount);
-
-        if (_remainWoolCount == 0)
-            _isCollected = true;
     }
 
     public void ActivateCanvas(int remainWoolCount)
@@ -56,5 +59,13 @@ public class BuyerCollector : MonoBehaviour
     public void DeactivateCanvas()
     {
         _canvasHandler.DisableCanvas();
+    }
+
+    private bool CheckCollected()
+    {
+        if (_lastWool != null && _lastWool.IsReadyToMove)
+            return true;
+
+        return false;
     }
 }
