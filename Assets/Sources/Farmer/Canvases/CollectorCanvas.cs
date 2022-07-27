@@ -5,7 +5,7 @@ using UnityEngine;
 public class CollectorCanvas : MonoBehaviour
 {
     private const float CountTextOffset = 1.5f;
-    private const float OverloadTextOffset = 0.3f;
+    private const float OverloadTextOffset = 0.5f;
     private const string AnimationTrigger = "IsOver";
 
     [SerializeField] private WoolCollector _collector;
